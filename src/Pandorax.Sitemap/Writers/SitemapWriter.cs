@@ -88,14 +88,14 @@ public sealed class SitemapWriter : ISitemapWriter
         await writer.WriteEndDocumentAsync();
         await writer.FlushAsync();
     }
-    private static IReadOnlyList<UrlEntry> FilterUrls(IReadOnlyList<UrlEntry> urls)
+    private static IReadOnlyList<SitemapUrl> FilterUrls(IReadOnlyList<SitemapUrl> urls)
     {
         if (urls.Count == 0)
         {
-            return Array.Empty<UrlEntry>();
+            return Array.Empty<SitemapUrl>();
         }
 
-        var filtered = new List<UrlEntry>(urls.Count);
+        var filtered = new List<SitemapUrl>(urls.Count);
         foreach (var url in urls)
         {
             if (url is null || url.Loc is null || !url.Loc.IsAbsoluteUri)
@@ -116,7 +116,7 @@ public sealed class SitemapWriter : ISitemapWriter
             var news = Filter(url.News, ExtensionValidator.IsValidNewsEntry);
             var alternates = Filter(url.Alternates, ExtensionValidator.IsValidAlternateLink);
 
-            filtered.Add(new UrlEntry(url.Loc, url.LastModified, changeFrequency, priority, images, videos, news, alternates));
+            filtered.Add(new SitemapUrl(url.Loc, url.LastModified, changeFrequency, priority, images, videos, news, alternates));
         }
 
         return filtered;
@@ -167,7 +167,7 @@ public sealed class SitemapWriter : ISitemapWriter
         return frequency.ToString().ToLowerInvariant();
     }
 
-    private IReadOnlyList<UrlEntry> PrepareUrls(SitemapModel sitemap)
+    private IReadOnlyList<SitemapUrl> PrepareUrls(SitemapModel sitemap)
     {
         if (_options.StrictValidation)
         {
@@ -238,7 +238,7 @@ public sealed class SitemapWriter : ISitemapWriter
         writer.WriteEndElement();
     }
 
-    private void WriteUrl(XmlWriter writer, UrlEntry url, NamespaceFlags namespaces)
+    private void WriteUrl(XmlWriter writer, SitemapUrl url, NamespaceFlags namespaces)
     {
         writer.WriteStartElement("url", SitemapNamespace);
         writer.WriteElementString("loc", SitemapNamespace, url.Loc.AbsoluteUri);
@@ -439,7 +439,7 @@ public sealed class SitemapWriter : ISitemapWriter
         public bool HasNews;
         public bool HasXhtml;
 
-        public static NamespaceFlags FromUrls(IReadOnlyList<UrlEntry> urls)
+        public static NamespaceFlags FromUrls(IReadOnlyList<SitemapUrl> urls)
         {
             var flags = default(NamespaceFlags);
             foreach (var url in urls)

@@ -11,7 +11,7 @@ public sealed class Sitemap
     /// Initializes a new instance of the <see cref="Sitemap"/> class.
     /// </summary>
     /// <param name="urls">The URL entries contained in the sitemap.</param>
-    public Sitemap(IReadOnlyList<UrlEntry> urls)
+    public Sitemap(IReadOnlyList<SitemapUrl> urls)
     {
         Urls = urls ?? throw new System.ArgumentNullException(nameof(urls));
     }
@@ -19,5 +19,5 @@ public sealed class Sitemap
     /// <summary>
     /// Gets the URL entries contained in the sitemap.
     /// </summary>
-    public IReadOnlyList<UrlEntry> Urls { get; }
+    public IReadOnlyList<SitemapUrl> Urls { get; }
 }

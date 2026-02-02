@@ -23,7 +23,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("https://example.com/"))
+            new SitemapUrl(new Uri("https://example.com/"))
         });
 
         var doc = await WriteAsync(sitemap);
@@ -46,7 +46,7 @@ public sealed class SitemapWriterTests
         var lastModified = new DateTimeOffset(2026, 1, 29, 12, 30, 0, TimeSpan.FromHours(2));
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("https://example.com/"), lastModified: lastModified)
+            new SitemapUrl(new Uri("https://example.com/"), lastModified: lastModified)
         });
 
         var doc = await WriteAsync(sitemap);
@@ -60,7 +60,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(
+            new SitemapUrl(
                 new Uri("https://example.com/"),
                 changeFrequency: ChangeFrequency.Weekly,
                 priority: 0.6m)
@@ -78,7 +78,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(
+            new SitemapUrl(
                 new Uri("https://example.com/"),
                 images: new[] { new ImageEntry(new Uri("https://example.com/image.jpg")) })
         });
@@ -94,7 +94,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(
+            new SitemapUrl(
                 new Uri("https://example.com/"),
                 videos: new[]
                 {
@@ -119,7 +119,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(
+            new SitemapUrl(
                 new Uri("https://example.com/"),
                 news: new[]
                 {
@@ -142,7 +142,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(
+            new SitemapUrl(
                 new Uri("https://example.com/"),
                 alternates: new[]
                 {
@@ -169,7 +169,7 @@ public sealed class SitemapWriterTests
 
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("https://example.com/"), images: new[] { image })
+            new SitemapUrl(new Uri("https://example.com/"), images: new[] { image })
         });
 
         var doc = await WriteAsync(sitemap);
@@ -203,7 +203,7 @@ public sealed class SitemapWriterTests
 
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("https://example.com/"), videos: new[] { video })
+            new SitemapUrl(new Uri("https://example.com/"), videos: new[] { video })
         });
 
         var doc = await WriteAsync(sitemap);
@@ -239,7 +239,7 @@ public sealed class SitemapWriterTests
 
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("https://example.com/"), news: new[] { news })
+            new SitemapUrl(new Uri("https://example.com/"), news: new[] { news })
         });
 
         var doc = await WriteAsync(sitemap);
@@ -259,7 +259,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(
+            new SitemapUrl(
                 new Uri("https://example.com/"),
                 alternates: new[]
                 {
@@ -298,7 +298,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("/relative", UriKind.Relative))
+            new SitemapUrl(new Uri("/relative", UriKind.Relative))
         });
 
         var writer = new SitemapWriter();
@@ -312,8 +312,8 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("https://example.com/")),
-            new UrlEntry(new Uri("/relative", UriKind.Relative))
+            new SitemapUrl(new Uri("https://example.com/")),
+            new SitemapUrl(new Uri("/relative", UriKind.Relative))
         });
 
         var doc = await WriteAsync(sitemap, new SitemapWriterOptions { StrictValidation = false });
@@ -333,7 +333,7 @@ public sealed class SitemapWriterTests
 
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("https://example.com/"), videos: new[] { invalidVideo })
+            new SitemapUrl(new Uri("https://example.com/"), videos: new[] { invalidVideo })
         });
 
         var doc = await WriteAsync(sitemap, new SitemapWriterOptions { StrictValidation = false });
@@ -345,10 +345,10 @@ public sealed class SitemapWriterTests
     [Fact]
     public async Task ThrowsWhenSitemapExceedsLimit()
     {
-        var urls = new List<UrlEntry>(50_001);
+        var urls = new List<SitemapUrl>(50_001);
         for (var i = 0; i < 50_001; i++)
         {
-            urls.Add(new UrlEntry(new Uri($"https://example.com/{i}")));
+            urls.Add(new SitemapUrl(new Uri($"https://example.com/{i}")));
         }
 
         var sitemap = new SitemapModel(urls);
@@ -379,7 +379,7 @@ public sealed class SitemapWriterTests
     {
         var sitemap = new SitemapModel(new[]
         {
-            new UrlEntry(new Uri("https://example.com/"))
+            new SitemapUrl(new Uri("https://example.com/"))
         });
 
         var writer = new SitemapWriter();

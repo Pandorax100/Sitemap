@@ -43,7 +43,7 @@ internal static class SitemapValidator
         }
     }
 
-    private static void ValidateUrlEntry(UrlEntry url)
+    private static void ValidateUrlEntry(SitemapUrl url)
     {
         if (url is null)
         {

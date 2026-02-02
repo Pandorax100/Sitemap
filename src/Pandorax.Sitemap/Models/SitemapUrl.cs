@@ -3,10 +3,10 @@ namespace Pandorax.Sitemap.Models;
 /// <summary>
 /// Represents a URL entry within a sitemap.
 /// </summary>
-public sealed class UrlEntry
+public sealed class SitemapUrl
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="UrlEntry"/> class.
+    /// Initializes a new instance of the <see cref="SitemapUrl"/> class.
     /// </summary>
     /// <param name="loc">The absolute URL of the page.</param>
     /// <param name="lastModified">The last modified timestamp for the page.</param>
@@ -16,7 +16,7 @@ public sealed class UrlEntry
     /// <param name="videos">Video sitemap entries associated with this URL.</param>
     /// <param name="news">News sitemap entries associated with this URL.</param>
     /// <param name="alternates">Alternate language or regional links for this URL.</param>
-    public UrlEntry(
+    public SitemapUrl(
         Uri loc,
         DateTimeOffset? lastModified = null,
         ChangeFrequency? changeFrequency = null,
@@ -44,35 +44,51 @@ public sealed class UrlEntry
     /// <summary>
     /// Gets the last modified timestamp for the page.
     /// </summary>
-    public DateTimeOffset? LastModified { get; }
+    public DateTimeOffset? LastModified { get; init; }
 
     /// <summary>
     /// Gets how frequently the page changes.
     /// </summary>
-    public ChangeFrequency? ChangeFrequency { get; }
+    public ChangeFrequency? ChangeFrequency { get; init; }
 
     /// <summary>
     /// Gets the priority of this URL relative to other URLs on the site.
     /// </summary>
-    public decimal? Priority { get; }
+    public decimal? Priority { get; init; }
 
     /// <summary>
     /// Gets the image sitemap entries associated with this URL.
     /// </summary>
-    public IReadOnlyList<ImageEntry> Images { get; }
+    public IReadOnlyList<ImageEntry> Images
+    {
+        get;
+        init => field = value ?? Array.Empty<ImageEntry>();
+    }
 
     /// <summary>
     /// Gets the video sitemap entries associated with this URL.
     /// </summary>
-    public IReadOnlyList<VideoEntry> Videos { get; }
+    public IReadOnlyList<VideoEntry> Videos
+    {
+        get;
+        init => field = value ?? Array.Empty<VideoEntry>();
+    }
 
     /// <summary>
     /// Gets the news sitemap entries associated with this URL.
     /// </summary>
-    public IReadOnlyList<NewsEntry> News { get; }
+    public IReadOnlyList<NewsEntry> News
+    {
+        get;
+        init => field = value ?? Array.Empty<NewsEntry>();
+    }
 
     /// <summary>
     /// Gets the alternate language or regional links for this URL.
     /// </summary>
-    public IReadOnlyList<AlternateLink> Alternates { get; }
+    public IReadOnlyList<AlternateLink> Alternates
+    {
+        get;
+        init => field = value ?? Array.Empty<AlternateLink>();
+    }
 }

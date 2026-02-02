@@ -36,7 +36,7 @@ public static class Example
     {
         var sitemap = new Sitemap(new[]
         {
-            new UrlEntry(
+            new SitemapUrl(
                 loc: new Uri("https://example.com/"),
                 lastModified: new DateTimeOffset(2026, 1, 29, 12, 30, 0, TimeSpan.Zero),
                 changeFrequency: ChangeFrequency.Daily,
@@ -121,7 +121,7 @@ public sealed class SitemapController : ControllerBase
     {
         var sitemap = new Sitemap(new[]
         {
-            new UrlEntry(
+            new SitemapUrl(
                 loc: new Uri("https://example.com/"),
                 lastModified: new DateTimeOffset(2026, 1, 29, 12, 30, 0, TimeSpan.Zero))
         });
