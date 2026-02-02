@@ -9,15 +9,22 @@
   <PropertyGroup>
     <PackageId>Pandorax.Sitemap</PackageId>
     <Version>0.0.0-alpha001</Version>
-    <Authors>Pandorax</Authors>
+    <Authors>Liam</Authors>
     <Description>Generate sitemap.xml and sitemap indexes with optional image, video, news, and hreflang extensions.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>sitemap;seo;xml</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/Pandorax100/Sitemap</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Pandorax100/Sitemap</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\\..\\README.md" Pack="true" PackagePath="\\README.md" />
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
