@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Pandorax.Sitemap/Pandorax.Sitemap.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Pandorax.Sitemap.Tests/Pandorax.Sitemap.Tests.csproj" />
+  </Folder>
 </Solution>
