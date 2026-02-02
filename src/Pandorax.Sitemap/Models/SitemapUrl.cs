@@ -17,6 +17,30 @@ public sealed class SitemapUrl
     /// <param name="news">News sitemap entries associated with this URL.</param>
     /// <param name="alternates">Alternate language or regional links for this URL.</param>
     public SitemapUrl(
+        string loc,
+        DateTimeOffset? lastModified = null,
+        ChangeFrequency? changeFrequency = null,
+        decimal? priority = null,
+        IReadOnlyList<ImageEntry>? images = null,
+        IReadOnlyList<VideoEntry>? videos = null,
+        IReadOnlyList<NewsEntry>? news = null,
+        IReadOnlyList<AlternateLink>? alternates = null)
+        : this(new Uri(loc), lastModified, changeFrequency, priority, images, videos, news, alternates)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SitemapUrl"/> class.
+    /// </summary>
+    /// <param name="loc">The absolute URL of the page.</param>
+    /// <param name="lastModified">The last modified timestamp for the page.</param>
+    /// <param name="changeFrequency">How frequently the page changes.</param>
+    /// <param name="priority">The priority of this URL relative to other URLs on the site.</param>
+    /// <param name="images">Image sitemap entries associated with this URL.</param>
+    /// <param name="videos">Video sitemap entries associated with this URL.</param>
+    /// <param name="news">News sitemap entries associated with this URL.</param>
+    /// <param name="alternates">Alternate language or regional links for this URL.</param>
+    public SitemapUrl(
         Uri loc,
         DateTimeOffset? lastModified = null,
         ChangeFrequency? changeFrequency = null,
