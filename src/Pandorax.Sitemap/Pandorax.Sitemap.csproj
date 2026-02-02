@@ -13,7 +13,7 @@
 
   <PropertyGroup Label="Package Settings">
     <PackageId>Pandorax.Sitemap</PackageId>
-    <Version>0.0.0-alpha003</Version>
+    <Version>1.0.0</Version>
     <Authors>Liam</Authors>
     <Description>Generate sitemap.xml and sitemap indexes with optional image, video, news, and hreflang extensions.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
