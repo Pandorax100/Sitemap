@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 using Pandorax.Sitemap.Models;
 using Pandorax.Sitemap.Options;
@@ -93,29 +88,6 @@ public sealed class SitemapWriter : ISitemapWriter
         await writer.WriteEndDocumentAsync();
         await writer.FlushAsync();
     }
-
-    private IReadOnlyList<UrlEntry> PrepareUrls(SitemapModel sitemap)
-    {
-        if (_options.StrictValidation)
-        {
-            SitemapValidator.ValidateSitemap(sitemap);
-            return sitemap.Urls;
-        }
-
-        return FilterUrls(sitemap.Urls);
-    }
-
-    private IReadOnlyList<SitemapIndexEntry> PrepareIndexEntries(SitemapIndexModel sitemapIndex)
-    {
-        if (_options.StrictValidation)
-        {
-            SitemapValidator.ValidateSitemapIndex(sitemapIndex);
-            return sitemapIndex.Sitemaps;
-        }
-
-        return FilterIndexEntries(sitemapIndex.Sitemaps);
-    }
-
     private static IReadOnlyList<UrlEntry> FilterUrls(IReadOnlyList<UrlEntry> urls)
     {
         if (urls.Count == 0)
@@ -188,6 +160,33 @@ public sealed class SitemapWriter : ISitemapWriter
         }
 
         return filtered.Count == 0 ? Array.Empty<T>() : filtered;
+    }
+
+    private static string ToChangeFrequencyValue(ChangeFrequency frequency)
+    {
+        return frequency.ToString().ToLowerInvariant();
+    }
+
+    private IReadOnlyList<UrlEntry> PrepareUrls(SitemapModel sitemap)
+    {
+        if (_options.StrictValidation)
+        {
+            SitemapValidator.ValidateSitemap(sitemap);
+            return sitemap.Urls;
+        }
+
+        return FilterUrls(sitemap.Urls);
+    }
+
+    private IReadOnlyList<SitemapIndexEntry> PrepareIndexEntries(SitemapIndexModel sitemapIndex)
+    {
+        if (_options.StrictValidation)
+        {
+            SitemapValidator.ValidateSitemapIndex(sitemapIndex);
+            return sitemapIndex.Sitemaps;
+        }
+
+        return FilterIndexEntries(sitemapIndex.Sitemaps);
     }
 
     private XmlWriter CreateXmlWriter(Stream stream)
@@ -433,11 +432,6 @@ public sealed class SitemapWriter : ISitemapWriter
         return value.ToUniversalTime().ToString(_options.DateTimeFormat, CultureInfo.InvariantCulture);
     }
 
-    private static string ToChangeFrequencyValue(ChangeFrequency frequency)
-    {
-        return frequency.ToString().ToLowerInvariant();
-    }
-
     private struct NamespaceFlags
     {
         public bool HasImage;
@@ -447,7 +441,7 @@ public sealed class SitemapWriter : ISitemapWriter
 
         public static NamespaceFlags FromUrls(IReadOnlyList<UrlEntry> urls)
         {
-            var flags = new NamespaceFlags();
+            var flags = default(NamespaceFlags);
             foreach (var url in urls)
             {
                 if (!flags.HasImage && url.Images.Count > 0)

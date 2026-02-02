@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Pandorax.Sitemap.Models;
 
 /// <summary>

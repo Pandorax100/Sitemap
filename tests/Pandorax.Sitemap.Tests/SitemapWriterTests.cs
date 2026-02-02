@@ -1,17 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using Pandorax.Sitemap.Extensions;
 using Pandorax.Sitemap.Models;
-using SitemapIndexModel = Pandorax.Sitemap.Models.SitemapIndex;
-using SitemapModel = Pandorax.Sitemap.Models.Sitemap;
 using Pandorax.Sitemap.Options;
 using Pandorax.Sitemap.Writers;
 using Xunit;
+using SitemapIndexModel = Pandorax.Sitemap.Models.SitemapIndex;
+using SitemapModel = Pandorax.Sitemap.Models.Sitemap;
 
 namespace Pandorax.Sitemap.Tests;
 
@@ -309,7 +304,7 @@ public sealed class SitemapWriterTests
         var writer = new SitemapWriter();
         await using var stream = new MemoryStream();
 
-        await Assert.ThrowsAsync<ArgumentException>(() => writer.WriteAsync(sitemap, stream));
+        await Assert.ThrowsAsync<ArgumentException>(() => writer.WriteAsync(sitemap, stream, TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -360,7 +355,7 @@ public sealed class SitemapWriterTests
         var writer = new SitemapWriter();
         await using var stream = new MemoryStream();
 
-        await Assert.ThrowsAsync<InvalidOperationException>(() => writer.WriteAsync(sitemap, stream));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => writer.WriteAsync(sitemap, stream, TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -376,7 +371,7 @@ public sealed class SitemapWriterTests
         var writer = new SitemapWriter();
         await using var stream = new MemoryStream();
 
-        await Assert.ThrowsAsync<InvalidOperationException>(() => writer.WriteAsync(index, stream));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => writer.WriteAsync(index, stream, TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -389,10 +384,10 @@ public sealed class SitemapWriterTests
 
         var writer = new SitemapWriter();
         await using var stream = new MemoryStream();
-        await writer.WriteAsync(sitemap, stream);
+        await writer.WriteAsync(sitemap, stream, TestContext.Current.CancellationToken);
         var writerXml = Encoding.UTF8.GetString(stream.ToArray());
 
-        var extensionXml = await sitemap.ToXmlAsync();
+        var extensionXml = await sitemap.ToXmlAsync(cancellationToken: TestContext.Current.CancellationToken);
 
         Assert.Equal(writerXml, extensionXml);
     }
